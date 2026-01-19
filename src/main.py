@@ -1,8 +1,5 @@
 import argparse
 
-if __name__ == "__main__":
-    main()
-
 def main():
     parser = argparse.ArgumentParser(
         description="CVE Priority Engine"
@@ -18,3 +15,6 @@ def main():
 
     if args.verbose:
         print(f"[*] Verbose logging enabled: {args.verbose} (obviously.)")
+
+if __name__ == "__main__":
+    main()

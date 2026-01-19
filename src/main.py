@@ -8,7 +8,8 @@ def main():
     parser.add_argument(
         "-v",
         "--verbose",
-        help="Verbose logging."
+        action="store_true",
+        help="Verbose logging.",
     )
 
     args = parser.parse_args()

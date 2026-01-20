@@ -26,9 +26,7 @@ def main():
     cve_IDs = [cve for cve in args.cves.split(',')]
     cve_Data = priority_Check.analyse(cve_IDs)
     for cve in cve_Data:
-        print(f"KEV:\n{cve.get('kev_Data')}")
-        print(f"NVD:\n{cve.get('nvd_Data')}")
-        print(f"EPSS:\n{cve.get('epss_Data')}")
+        print(f"{cve}")
 
 if __name__ == "__main__":
     main()

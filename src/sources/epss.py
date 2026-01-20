@@ -12,7 +12,12 @@ class EPSS_Client:
             response.raise_for_status()
             data = response.json()
 
-            print(data)
+            if entry := data.get("data", []):
+                entry = entry[0]
+                return {
+                    "epss_Score": float(entry.get("epss", 0)),
+                    "epss_Percentile": float(entry.get("percentile", 0)),
+                }
 
         # TODO: Add actual exception handling
         except Exception as e:

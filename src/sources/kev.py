@@ -24,7 +24,7 @@ class KEV_Client:
 
             # TODO: Add actual exception handling
             except Exception as e:
-                print(f"[!] Some error in NVD request for CVE {cveID}: {e}")
+                print(f"[!] Some error in NVD request for CVE {cve_ID}: {e}")
                 return None
 
         return catalog.get(cve_ID, {})

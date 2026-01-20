@@ -15,6 +15,7 @@ class CVE_Priority:
             cve_Data = {
                 "kev_Data": self.kev.fetch(cve_ID),
                 "nvd_Data": self.nvd.fetch(cve_ID),
+                "epss_Data": self.epss.fetch(cve_ID),
             }
             cve_Data_Values.append(cve_Data)
         return cve_Data_Values

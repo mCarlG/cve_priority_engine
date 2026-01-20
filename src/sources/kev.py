@@ -7,7 +7,7 @@ class KEV_Client:
         self.session = requests.Session()
         self.cache = None # We can just pull the whole thing once.
 
-    def fetch(self cve_ID):
+    def fetch(self, cve_ID):
         if self.cache == None:
             try:
                 response = self.session.get(self.URL, timeout=10)

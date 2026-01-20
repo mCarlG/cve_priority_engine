@@ -8,7 +8,7 @@ class NVD_Client:
         self.session = requests.Session()
 
     def _rate_limit(self):
-        time.sleep(RATE_LIMIT)
+        time.sleep(self.RATE_LIMIT)
 
     def fetch(self, cve_ID):
         self._rate_limit()
@@ -23,18 +23,22 @@ class NVD_Client:
 
             vuln = data["vulnerabilities"][0]["cve"]
 
-            cvss_Data = None
             metrics = vuln.get("metrics", {})
-            if "cvssMetricsV31" in metrics:
+            if "cvssMetricV31" in metrics:
                 cvss_Data = metrics["cvssMetricV31"][0]["cvssData"]
-            elif "cvssMetricsV30" in metrics:
+                cvss_Severity = cvss_Data.get("baseSeverity", None)
+                cvss_Vector = cvss_Data.get("vectorString", None)
+                cvss_Score = cvss_Data.get("baseScore", None)
+            if "cvssMetricV30" in metrics:
                 cvss_Data = metrics["cvssMetricV30"][0]["cvssData"]
-            elif "cvssMetricsV2" in metrics:
+                cvss_Severity = cvss_Data.get("baseSeverity", None)
+                cvss_Vector = cvss_Data.get("vectorString", None)
+                cvss_Score = cvss_Data.get("baseScore", None)
+            if "cvssMetricV2" in metrics:
                 cvss_Data = metrics["cvssMetricV2"][0]["cvssData"]
-
-            cvss_Severity = vuln.get("baseSeverity", None)
-            cvss_Sector = vuln.get("vectorString", None)
-            cvss_Score = vuln.get("baseSeverity", None)
+                cvss_Severity = cvss_Data.get("baseSeverity", None)
+                cvss_Vector = cvss_Data.get("vectorString", None)
+                cvss_Score = cvss_Data.get("baseScore", None)
 
             cvss_Description = None
             if descriptions := vuln.get("descriptions", []):
@@ -42,7 +46,7 @@ class NVD_Client:
 
             return {
                 "cve_ID": cve_ID,
-                "cvss_Description": cve_Description,
+                "cvss_Description": cvss_Description,
                 "cvss_Score": cvss_Score,
                 "cvss_Severity": cvss_Severity,
                 "cvss_Vector": cvss_Vector,

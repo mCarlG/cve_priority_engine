@@ -28,6 +28,32 @@ class OutputFancify:
 
         for cve in results:
             priority_Colour = self._get_Priority_Colour(cve.priority_Tier)
+            priority_Text = f"[{priority_Colour}]{cve.priority_Tier}[/{priority_Colour}]"
+
+            if cve.in_KEV:
+                kev_Status = "Y"
+                if cve.kev_Ransomware:
+                    kev_Status += " [red](ransomware)[/red]"
+            else:
+                kev_Status = "N"
+
+            table.add_row(
+                cve.cve_ID,
+                priority_Text,
+                f"{cve.composite_Score:.1f}",
+                f"{cve.cvss_Score}",
+                f"{(cve.epss_Score * 100):.1f}%",
+                kev_Status,
+            )
+
+        self.console.print(table)
+
+        self.console.print()
+        self.console.print("[bold]Reasoning:[/bold]")
+        self.console.print("-" * 80)
+
+        for cve in results:
+            priority_Colour = self._get_Priority_Colour(cve.priority_Tier)
             self.console.print(f"* [bold]{cve.cve_ID}[/bold]: {cve.reasoning}")
             self.console.print()
 

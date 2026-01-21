@@ -1,5 +1,6 @@
 import argparse
 import priorities
+from fancify import OutputFancify
 def main():
     parser = argparse.ArgumentParser(
         description="CVE Priority Engine"
@@ -25,8 +26,7 @@ def main():
     priority_Check = priorities.CVE_Priority()
     cve_IDs = [cve for cve in args.cves.split(',')]
     cve_Data = priority_Check.analyse(cve_IDs)
-    for cve in cve_Data:
-        print(f"{cve}")
+    OutputFancify().format(cve_Data)
 
 if __name__ == "__main__":
     main()

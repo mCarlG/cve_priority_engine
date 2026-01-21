@@ -1,6 +1,7 @@
 from sources.nvd import NVD_Client
 from sources.epss import EPSS_Client
 from sources.kev import KEV_Client
+from storage import CVE_Data
 
 class CVE_Priority:
 
@@ -40,25 +41,25 @@ class CVE_Priority:
                 kev_Ransomware=kev_Data.get("kev_Ransomware", None),
             )
 
-            cve_Data = {
-                "cve_ID": cve_ID,
-                "description": nvd_Data.get("description", ""),
-                "cvss_Score": nvd_Data.get("cvss_Score"),
-                "cvss_Severity": nvd_Data.get("cvss_Severity"),
-                "cvss_Vector": nvd_Data.get("cvss_Vector"),
-                "epss_Score": epss_Data.get("epss_Score"),
-                "epss_Percentile": epss_Data.get("epss_Percentile"),
-                "in_KEV": in_KEV,
-                "kev_Due_Date": kev_Data.get("kev_Due_Date", None),
-                "kev_Ransomware": kev_Data.get("kev_Ransomware", None),
-                "composite_Score": composite_Score,
-                "priority_Tier": priority_Tier,
-                "reasoning": reasoning,
-            }
+            cve_Data = CVE_Data(
+                cve_ID = cve_ID,
+                description = nvd_Data.get("description", ""),
+                cvss_Score = nvd_Data.get("cvss_Score"),
+                cvss_Severity = nvd_Data.get("cvss_Severity"),
+                cvss_Vector = nvd_Data.get("cvss_Vector"),
+                epss_Score = epss_Data.get("epss_Score"),
+                epss_Percentile = epss_Data.get("epss_Percentile"),
+                in_KEV = in_KEV,
+                kev_Due_Date = kev_Data.get("kev_Due_Date", None),
+                kev_Ransomware = kev_Data.get("kev_Ransomware", None),
+                composite_Score = composite_Score,
+                priority_Tier = priority_Tier,
+                reasoning = reasoning,
+            )
 
             cve_Data_Values.append(cve_Data)
 
-        cve_Data_Values.sort(key=lambda x: x.get("composite_Score"), reverse=True)
+        cve_Data_Values.sort(key=lambda x: x.composite_Score, reverse=True)
         return cve_Data_Values
 
     def _calculate_Composite_Score(self, cvss_Score, epss_Score, in_KEV):

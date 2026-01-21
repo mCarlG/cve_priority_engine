@@ -104,10 +104,10 @@ class CVE_Priority:
             if in_KEV:
                 recommendation = "Prioritize patching - confirmed active exploitation."
             else:
-                recommendation = "Prioritize patching - high exploitation risk."
+                recommendation = "Prioritize patching - high risk."
         elif priority_Tier == "MEDIUM":
             recommendation = "Schedule for next maintenance window - moderate risk."
         else:
-            recommendation = "Schedule as needed - low threat."
+            recommendation = "Schedule as needed - low risk."
 
         return f"{priority_Tier}: {cvss_Reason}, {epss_Reason}, {kev_Reason}. {recommendation}"

@@ -27,4 +27,4 @@ class KEV_Client:
                 print(f"[!] Some error in NVD request for CVE {cve_ID}: {e}")
                 return None
 
-        return catalog.get(cve_ID, {})
+        return self.cache.get(cve_ID, {})
